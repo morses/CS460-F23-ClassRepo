@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TeamGenerator.Models;
+using TeamGenerator.ViewModels;
 
 namespace TeamGenerator.Controllers;
 
@@ -15,7 +16,25 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        TeamGeneratorVM vm = new TeamGeneratorVM();
+        return View(vm);
+    }
+
+    [HttpGet]
+    public IActionResult Teams()
+    {
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public IActionResult Teams(TeamGeneratorVM vm)
+    {
+        if(!ModelState.IsValid)
+        {
+            return View("Index", vm);
+        }
+        Teams teams = new Teams(vm.Names, vm.TeamSize);
+        return View(teams);
     }
 
     public IActionResult Privacy()
