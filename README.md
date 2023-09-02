@@ -3,3 +3,4 @@ The main repository for the WOU Senior Project for 2023-24.  All in-class exampl
 
 A few contents:
 - Quick dotnet command reference [application_setup/commands.md](application_setup/commands.md)
+- Code for the "How to solve a homework assignment (video series)" can be found in the [examples/TeamGenerator](examples/TeamGenerator) project.
