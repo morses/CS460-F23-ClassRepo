@@ -27,6 +27,11 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllerRoute(
+            name: "teams",
+            pattern: "teams/",
+            defaults: new { controller = "Home", action = "Teams" });
+
+        app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
 
