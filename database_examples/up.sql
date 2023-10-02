@@ -19,7 +19,8 @@ CREATE TABLE [Seller]
   [FirstName] NVARCHAR(50) NOT NULL,
   [LastName]  NVARCHAR(50) NOT NULL,
   [Email]     NVARCHAR(50) NOT NULL,
-  [Phone]     NVARCHAR(15)
+  [Phone]     NVARCHAR(15),
+  [TaxIDNumber] NVARCHAR(12) NOT NULL
 );
 
 CREATE TABLE [Item] 
