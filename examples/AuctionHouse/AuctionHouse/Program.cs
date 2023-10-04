@@ -1,3 +1,8 @@
+using AuctionHouse.DAL.Abstract;
+using AuctionHouse.DAL.Concrete;
+using AuctionHouse.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace AuctionHouse;
 
 public class Program
@@ -8,7 +13,17 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-
+        // Add our dbcontext to the Dependency Injection container
+        builder.Services.AddDbContext<AuctionHouseDbContext>(
+                options => options
+                .UseLazyLoadingProxies()    
+                .UseSqlServer(
+                    builder.Configuration.GetConnectionString("AuctionHouseConnection")));
+        builder.Services.AddScoped<DbContext,AuctionHouseDbContext>();
+        builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        builder.Services.AddScoped<IBuyerRepository, BuyerRepository>();
+        
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -17,6 +32,10 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
+        }
+        else
+        {
+            app.UseDeveloperExceptionPage();
         }
 
         app.UseHttpsRedirection();
