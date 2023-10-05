@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AuctionHouse.Models;
+using Microsoft.AspNetCore.Http.Features;
+using AuctionHouse.DAL.Abstract;
+using AuctionHouse.ViewModels;
 
 namespace AuctionHouse.Controllers;
 
@@ -8,14 +11,32 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    AuctionHouseDbContext _context;
+    private readonly IBuyerRepository _buyerRepository;
+    //public HomeController(ILogger<HomeController> logger, AuctionHouseDbContext context,IRepository<Buyer> buyerRepo)
+    public HomeController(ILogger<HomeController> logger, AuctionHouseDbContext context, IBuyerRepository buyerRepo)
     {
         _logger = logger;
+        _context = context;
+        _buyerRepository = buyerRepo;
     }
 
     public IActionResult Index()
     {
-        return View();
+        
+        List<Item> items = _context.Items.ToList();
+        return View(items);
+    }
+
+    public IActionResult Buyers()
+    {
+        List<Buyer> buyers = _buyerRepository.GetAll().ToList();
+        List<string> emailList = _buyerRepository.EmailList();
+
+        BuyersVM vm = new BuyersVM();
+        vm.EmailList = emailList;
+        vm.Buyers = buyers;
+        return View(vm);
     }
 
     public IActionResult Privacy()

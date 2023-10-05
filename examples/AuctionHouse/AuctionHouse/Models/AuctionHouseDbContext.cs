@@ -24,7 +24,14 @@ public partial class AuctionHouseDbContext : DbContext
     public virtual DbSet<Seller> Sellers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=AuctionHouseConnection");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Name=AuctionHouseConnection");
+        }
+        optionsBuilder.UseLazyLoadingProxies();
+    }
+        
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
