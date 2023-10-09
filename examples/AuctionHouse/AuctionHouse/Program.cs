@@ -22,8 +22,9 @@ public class Program
         builder.Services.AddScoped<DbContext,AuctionHouseDbContext>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddScoped<IBuyerRepository, BuyerRepository>();
-        
-        
+        builder.Services.AddScoped<IItemRepository, ItemRepository>();
+
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

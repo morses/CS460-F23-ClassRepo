@@ -13,12 +13,14 @@ public class HomeController : Controller
 
     AuctionHouseDbContext _context;
     private readonly IBuyerRepository _buyerRepository;
+    private readonly IItemRepository _itemRepository;
     //public HomeController(ILogger<HomeController> logger, AuctionHouseDbContext context,IRepository<Buyer> buyerRepo)
-    public HomeController(ILogger<HomeController> logger, AuctionHouseDbContext context, IBuyerRepository buyerRepo)
+    public HomeController(ILogger<HomeController> logger, AuctionHouseDbContext context, IBuyerRepository buyerRepo, IItemRepository itemRepo)
     {
         _logger = logger;
         _context = context;
         _buyerRepository = buyerRepo;
+        _itemRepository = itemRepo;
     }
 
     public IActionResult Index()
@@ -37,6 +39,12 @@ public class HomeController : Controller
         vm.EmailList = emailList;
         vm.Buyers = buyers;
         return View(vm);
+    }
+
+    public IActionResult Items()
+    {
+        List<string> itemNames = _itemRepository.ItemNames();
+        return View(itemNames);
     }
 
     public IActionResult Privacy()
