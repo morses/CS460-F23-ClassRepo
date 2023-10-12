@@ -1,0 +1,65 @@
+﻿@model HW2.ViewModels.InfoVM
+@{
+    ViewData["Title"] = "Information about what's in our catalog";
+}
+
+<h1 class="text-center">Information</h1>
+<p>We have an extensive database of shows.  Here's some interesting info about what we have!</p>
+
+<div class="row">
+    <div class="col-sm-7 border border-1 rounded text-center m-4">
+        <span class="fs-1 fw-bold font-monospace text-primary">@Model.NumberOfShows</span>&nbsp;Total&nbsp;Shows, including&nbsp; 
+        <span class="fs-2 fw-bold font-monospace text-success ms-4">@Model.NumberOfMovies</span>&nbsp;Movies 
+        <span class="fs-2 fw-bold font-monospace text-success ms-4">@Model.NumberOfTVShows</span>&nbsp;TV&nbsp;Shows
+    </div>
+    <div class="col-sm-5 border border-1 rounded m-4">
+        @{
+            Show show = Model.ShowWithMostIMDBVotes;
+        }
+        <img src="~/img/IMDB_Logo_2016.svg" height="50" class="me-3"/>Most&nbsp;Votes:  &nbsp;&nbsp;
+            <span class="fst-italic">@(show?.Title ?? "--")</span> @(show?.ReleaseYear ?? 0)
+    </div>
+    <div class="col-sm-10 border border-1 rounded m-4">
+        @{
+            show = Model.ShowWithHighestTMDBPopularity;
+        }
+        <img src="~/img/TMDB_logo.svg" height="50" class="me-3"/>Most&nbsp;Popular: &nbsp;&nbsp; 
+            <span class="fst-italic">@(show?.Title ?? "--")</span> @(show?.ReleaseYear ?? 0)
+    </div>
+    
+    <div class="col-sm-5 border border-1 rounded m-4">
+    @{
+        // Display genres in 2 columns.  If there's an odd number, put the extra one in the first column.
+        var genres = Model.Genres;
+        int N = genres.Count();
+        var halfCount = (int)Math.Ceiling(N/2.0);
+        var firstHalf = genres.Take(halfCount);
+        var secondHalf = genres.Skip(halfCount);
+    }
+    <h3 class="text-center">Genres</h3>
+        <table class="table table-borderless">
+            <tbody>
+                @for (int i = 0; i < halfCount; i++)
+                {
+                    <tr>
+                        <td><span class="fw-bold">@firstHalf.ElementAt(i)</span></td>
+                        <td><span class="fw-bold">@secondHalf.ElementAtOrDefault(i)</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-5  m-4 fixed-with-scroll">
+        <div class="card">
+            <div class="card-header">
+                <span class="display-5">@Model.DirectorNameWithMostShows</span> <span class="fst-italic fs-6">directed</span>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach(string showTitle in Model.ShowsForDirectorWithMost)
+                {
+                    <li class="list-group-item">@showTitle</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
