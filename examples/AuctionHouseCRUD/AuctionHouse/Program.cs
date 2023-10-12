@@ -25,6 +25,10 @@ public class Program
         builder.Services.AddScoped<IItemRepository, ItemRepository>();
         builder.Services.AddScoped<ISellerRepository, SellerRepository>();
 
+        // Add Swagger for REST API live documentation and testing
+        // Needs packages Swashbuckle.AspNetCore.SwaggerGen and Swashbuckle.AspNetCore.SwaggerUI
+        builder.Services.AddSwaggerGen();
+
 
         var app = builder.Build();
 
@@ -38,6 +42,8 @@ public class Program
         else
         {
             app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
