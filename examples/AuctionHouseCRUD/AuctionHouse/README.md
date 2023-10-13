@@ -15,3 +15,10 @@
 	2. Customize, fix things and use our Repository
 	3. Fix problem with cycles in JSON serialization
 	4. And finish writing the PUT method, which is surprisingly complex for only keeping the TaxID unique and not allowing it to be changed
+
+## Use these endpoints
+
+    1. Create base page and get "Hello World!" JS working 
+	2. Add a table to display Sellers that is populated by an AJAX call
+	3. Add delete functionality to each row to allow deleting a Seller
+	4. Add a form to create a new Seller in a modal dialog
