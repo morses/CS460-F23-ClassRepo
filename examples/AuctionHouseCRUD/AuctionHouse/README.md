@@ -13,3 +13,5 @@
 
 	1. Scaffold a new API controller for Sellers with dotnet-aspnet-codegenerator
 	2. Customize, fix things and use our Repository
+	3. Fix problem with cycles in JSON serialization
+	4. And finish writing the PUT method, which is surprisingly complex for only keeping the TaxID unique and not allowing it to be changed
