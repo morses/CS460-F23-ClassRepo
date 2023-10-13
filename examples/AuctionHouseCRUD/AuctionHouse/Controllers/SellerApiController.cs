@@ -6,33 +6,40 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuctionHouse.Models;
+using AuctionHouse.DAL.Abstract;
 
 namespace AuctionHouse.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/seller")]
     [ApiController]
     public class SellerApiController : ControllerBase
     {
+        private readonly ISellerRepository _sellerRepository;
+
         private readonly AuctionHouseDbContext _context;
 
-        public SellerApiController(AuctionHouseDbContext context)
+        public SellerApiController(ISellerRepository sellerRepo)
         {
-            _context = context;
+            _sellerRepository = sellerRepo;
         }
 
-        // GET: api/SellerApi
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Seller>>> GetSellers()
+        // GET: api/seller/sellers
+        [HttpGet("sellers")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Seller>))]
+        public ActionResult<IEnumerable<Seller>> GetSellers()
         {
-            return await _context.Sellers.ToListAsync();
+            var sellers = _sellerRepository.GetAll().ToList();
+            return sellers;
         }
 
-        // GET: api/SellerApi/5
+        // GET: api/seller/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Seller>> GetSeller(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Seller))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Seller> GetSeller(int id)
         {
-            var seller = await _context.Sellers.FindAsync(id);
 
+            var seller = _sellerRepository.FindById(id);
             if (seller == null)
             {
                 return NotFound();
@@ -41,67 +48,73 @@ namespace AuctionHouse.Controllers
             return seller;
         }
 
+        // PUT acts as CREATE and UPDATE ALL, i.e. replace; PATCH means update some (see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT)
         // PUT: api/SellerApi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSeller(int id, Seller seller)
+        [ProducesResponseType(StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status201Created), ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult PutSeller(int id, Seller seller)
         {
+            // Model validation is applied automatically inside ApiController's and result in an automatic 400 (BadRequest) response
             if (id != seller.Id)
             {
-                return BadRequest();
+                return Problem(detail: "Invalid ID", statusCode: 400);
             }
 
-            _context.Entry(seller).State = EntityState.Modified;
-
+            if (_sellerRepository.TaxIdAlreadyInUse(seller.TaxIdnumber))
+            {
+                return Problem(detail: "The Tax ID entered is invalid.  Please enter your correct ID.",statusCode: 400);
+            }
             try
             {
-                await _context.SaveChangesAsync();
+                _sellerRepository.AddOrUpdate(seller);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                if (!SellerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                
+                return Problem(detail: "The server experienced a problem.  Please try again.", statusCode: 500);
             }
-
-            return NoContent();
+            catch (DbUpdateException e)
+            {
+                return Problem(detail: "The server experienced a problem.  Please try again.", statusCode: 500);
+            }
+            // Return accepted status codes depending on Create or Update
+            if(id == 0)
+            {
+                return CreatedAtAction("GetSeller", new { id = seller.Id }, seller);
+            }
+            else
+            {
+                return NoContent();
+            }   
         }
 
-        // POST: api/SellerApi
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Seller>> PostSeller(Seller seller)
-        {
-            _context.Sellers.Add(seller);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSeller", new { id = seller.Id }, seller);
-        }
+        // POSTing a Seller makes no sense, so remove it
 
         // DELETE: api/SellerApi/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSeller(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteSeller(int id)
         {
-            var seller = await _context.Sellers.FindAsync(id);
+            var seller = _sellerRepository.FindById(id);
             if (seller == null)
             {
                 return NotFound();
             }
 
-            _context.Sellers.Remove(seller);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _sellerRepository.Delete(seller);
+            }
+            catch (Exception e)
+            {
+                return Problem(detail: "The server experienced a problem.  Please try again.", statusCode: 500);
+            }
 
             return NoContent();
         }
 
-        private bool SellerExists(int id)
-        {
-            return _context.Sellers.Any(e => e.Id == id);
-        }
     }
 }

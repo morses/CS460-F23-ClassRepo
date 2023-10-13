@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuctionHouse.Models;
@@ -36,5 +37,6 @@ public partial class Seller
     public string TaxIdnumber { get; set; }
 
     [InverseProperty("Seller")]
+    [JsonIgnore]
     public virtual ICollection<Item> Items { get; set; } = new List<Item>();
 }
