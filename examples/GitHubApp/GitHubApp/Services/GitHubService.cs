@@ -35,7 +35,7 @@ namespace GitHubApp.Services
         public async Task<IEnumerable<GitRepo>> SearchRepositoriesAsync(string query)
         {
             // "https://api.github.com/search/repositories?q=Q"
-            string endpoint = $"search/repositories?q={query}";
+            string endpoint = $"search/repositories?q={query}&per_page=100";
             _logger.LogInformation($"Calling GitHub API at {endpoint}");
 
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
