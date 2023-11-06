@@ -6,3 +6,4 @@ A few contents:
 - Code for the "How to solve a homework assignment (video series)" can be found in the [examples/TeamGenerator](examples/TeamGenerator) project.
 - Starting files for Homework #2, such as the up, down and seed scripts as well as repository interface and concrete class, can be found in [homework/HW2](homework/HW2)
 - My solution to HW 1 can be found in [homework/HW1_solutions](homework/HW1_solutions)
+- My solution to HW 2 can be found in [homework/HW2_solutions](homework/HW2_solutions)
