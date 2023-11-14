@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Movie Search";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Search for Movies</h1>
+</div>
+
+<div class="text-center">
+    <form class="w-50 mx-auto mt-3">
+        <label class="visually-hidden" for="search-input">Search for a movie</label>
+        <div class="input-group">
+            <input class="form-control" id="search-input" type="search" placeholder="Search for a movie" aria-label="Search">
+            <button class="btn btn-lg btn-outline-primary" id="search-button">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div id="search-results" class="mt-3"> </div>
+
+<template id="movie-card">
+    <div id="movie-card-container" class="card mb-3">
+        <div class="row gx-5">
+            <div class="col-lg-1">
+                <img id="movie-image" src="https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg" class="rounded-start" width="90px" alt="...">
+            </div>
+            <div class="col-lg-11">
+                <div class="card-body p-4">
+                    <h5 id="movie-title" class="card-title fs-3 fw-semibold mb-0">Captain America</h5>
+                    <p class="card-text mb-0"><small id="movie-date" class="text-muted">April 27, 2016</small></p>
+                    <p id="movie-description" class="card-text mt-0">Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Modal -->
+<div class="modal fade" id="movie-detail-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center fs-3 fw-semibold" style="margin: 0 auto;">
+                    <span id="movie-detail-title">Captain America</span>&nbsp;&nbsp;
+                    <span id="movie-detail-year">(2016)</span>
+                    </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <!-- Photo by Shakti Rajpurohit on Unsplash -->
+                            <img id="movie-detail-image" src="/img/shakti-rajpurohit-qczubsyHofQ-unsplash.jpg" class="rounded-start" alt="..." width="500">
+                        </div>
+                        <div class="col">
+                            <p>
+                                <span class="fw-bolder">Released on:</span> &nbsp; &nbsp;<span id="movie-detail-date"></span>
+                                <span id="movie-detail-genres"></span>
+                            </p>
+                            <p>
+                                <span class="fw-bolder">Runtime: </span> <span id="movie-detail-runtime"></span>
+                            </p>
+                            <p>
+                                <span class="fw-bolder">Popularity: </span><span id="movie-detail-popularity"></span>&nbsp;&nbsp;
+                                <span class="fw-bolder">Revenue: </span><span id="movie-detail-revenue"></span>
+                            </p>
+                            <h5 class="fw-bolder">Overview</h5>
+                            <p id="movie-detail-description">We're really sorry.  Have a cookie!</p>
+                            <h5 class="fw-bolder">Cast</h5>
+                            <p id="movie-detail-cast"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/search.js"></script>
+}
