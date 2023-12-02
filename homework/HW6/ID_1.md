@@ -34,7 +34,7 @@ Orders are ready to be sent from a separate system we've already developed.  All
     - the customer's name and each of the items ordered (name and quantity, no ids)
     - the total order price
     - the delivery location
-    - and some indicator next to each item that tells us its fulfillment status (red/green would be a good choice)
+    - and some indicator next to each item that tells us its fulfillment status (~~red/green would be a good choice~~ but not literally red and green -- use [Colorblind Safe Color Schemes](https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf))
 
 3. Update the current orders at least every 10 seconds
 
