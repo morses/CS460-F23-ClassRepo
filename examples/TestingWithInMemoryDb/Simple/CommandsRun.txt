@@ -1,0 +1,10 @@
+﻿
+Run app first and create a user, then run the following commands to create the database and tables:
+
+dotnet ef migrations script --output Data/IdentityUp.sql
+
+dotnet aspnet-codegenerator identity -dc Simple.Data.ApplicationDbContext --files "Account.Register;Account.Login;Account.Manage.Index" --force
+
+Customize the user data model by subclassing IdentityUser and adding additional properties.
+
+dotnet ef migrations add CustomUserData --output-dir Data/Migrations --context ApplicationDbContext
