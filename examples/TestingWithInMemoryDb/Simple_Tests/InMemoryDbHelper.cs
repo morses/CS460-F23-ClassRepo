@@ -1,8 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
-using Simple.Data;
-using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 
 // This example got me started with this: https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs
@@ -40,7 +38,7 @@ namespace Simple_Tests
                                     .Options;
 
             // Create a context to use in populating the DB with tables defined in the context
-            using TContext context = (TContext)Activator.CreateInstance(typeof(TContext), _dbContextOptions); // new TContext(_dbContextOptions);
+            using TContext context = (TContext)Activator.CreateInstance(typeof(TContext), _dbContextOptions); // same as: new TContext(_dbContextOptions);
             if (!context.Database.EnsureCreated())
             {
                 Debug.WriteLine("Entity Framework could not ensure the db was created using Code First");

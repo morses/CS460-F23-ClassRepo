@@ -25,12 +25,6 @@ public class ReuseTheDb_Tests
 
     private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.ReuseDb);
 
-    [OneTimeTearDown]
-    public void Dispose()
-    {
-        _dbHelper.Dispose();
-    }
-
     [Test]
     public void SimpleContext_Add_UserLog_IsSuccessful()
     {
@@ -68,9 +62,12 @@ public class ReuseTheDb_Tests
     [Test]
     public void SimpleContext_HasBeenSeeded()
     {
+        // Db is seeded with 4 logs
         SimpleDbContext context = _dbHelper.GetContext();
-        // !!! This test will fail if another test adds an item to the userlogs table.
+        Assert.That(context.UserLogs.Count(), Is.EqualTo(4));
+        
+        // !!! This test will fail if another test adds an item to the userlogs table as happens above.
         // But that doesn't mean it isn't correct!  Incorrect could be correct ^~~((
-        Assert.That(context.UserLogs.Count(), Is.EqualTo(5));
+        // Assert.That(context.UserLogs.Count(), Is.EqualTo(5));
     }
 }

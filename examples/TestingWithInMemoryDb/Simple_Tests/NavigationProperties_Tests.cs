@@ -18,12 +18,6 @@ public class NavigationProperties_Tests
     // Create this helper like this, for whatever context you desire
     private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
-    [OneTimeTearDown]
-    public void Dispose()
-    {
-        _dbHelper.Dispose();
-    }
-
     [Test]
     public void Colors_Are_Seeded()
     {

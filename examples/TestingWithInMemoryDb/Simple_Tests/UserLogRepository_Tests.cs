@@ -23,12 +23,6 @@ public class UserLogRepository_Tests
 
     private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
-    [OneTimeTearDown]
-    public void Dispose()
-    {
-        _dbHelper.Dispose();
-    }
-
     [Test]
     public void MostRecentVisit_ForUserWithTwoVisits_ReturnsNewest()
     {

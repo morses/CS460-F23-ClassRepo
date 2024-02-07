@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    UserLog sampleLogItem = new UserLog();    // makes it easy to use a label for property names and works when the log is empty
 }
 
 <h1>Current UTC time: @DateTime.UtcNow.ToString()</h1>
@@ -10,33 +11,33 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
+                <label asp-for="@sampleLogItem.TimeStamp"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ipaddress)
+                <label asp-for="@sampleLogItem.Ipaddress"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AspnetIdentityId)
+                <label asp-for="@sampleLogItem.AspnetIdentityId"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserAgent)
+                <label asp-for="@sampleLogItem.UserAgent"></label>
             </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
+            <tr style="background-color: @item.Color.ToHtmlColor("20")">
+            <td >
+                @item.TimeStamp
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ipaddress)
+                @item.Ipaddress
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AspnetIdentityId)
+                @item.AspnetIdentityId
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserAgent)
+                @item.UserAgent
             </td>
         </tr>
 }

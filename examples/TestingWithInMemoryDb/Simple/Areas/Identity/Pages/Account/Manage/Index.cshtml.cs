@@ -83,7 +83,8 @@ namespace Simple.Areas.Identity.Pages.Account.Manage
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                DOB = user.DOB
             };
         }
 

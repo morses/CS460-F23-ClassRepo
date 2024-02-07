@@ -35,14 +35,15 @@ public class HomeController : Controller
             TimeStamp = DateTime.UtcNow,
             Ipaddress = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
             UserAgent = Request.Headers.UserAgent,
-            // Pick a random color between 1 and 3
+            // Pick a random color between 1 and 3 (should be between 1 and max color count)
             ColorId = new Random().Next(1, 4)
         };
         _userLogger.AddOrUpdate(lg);
 
         MainPageVM vm = new MainPageVM();
 
-        SimpleUser user = await _userManager.GetUserAsync(HttpContext.User);
+        // To get details of the user stored in the Identity tables, use an Identity provided manager, such as UserManager
+        SimpleUser user = await _userManager.GetUserAsync(User);
         if (user != null)
         {
             vm.FirstName = user.FirstName;
