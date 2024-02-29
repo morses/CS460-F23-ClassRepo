@@ -1,4 +1,4 @@
-﻿INSERT INTO [Color](HexValue)
+INSERT INTO [Color](HexValue)
 	VALUES
 	('0xFF0000'),
 	('0x00FF00'),

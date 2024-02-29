@@ -16,12 +16,12 @@ public class NavigationProperties_Tests
     private static readonly string _seedFile = @"..\..\..\Data\SEED.sql";  // relative path from where the executable is: bin/Debug/net7.0
 
     // Create this helper like this, for whatever context you desire
-    private InMemoryDbHelper<UserLogsDbContext> _dbHelper = new InMemoryDbHelper<UserLogsDbContext>(_seedFile, DbPersistence.OneDbPerTest);
+    private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
     [Test]
     public void Colors_Are_Seeded()
     {
-        using UserLogsDbContext context = _dbHelper.GetContext();
+        using SimpleDbContext context = _dbHelper.GetContext();
 
         Assert.That(context.Colors.Count(),Is.EqualTo(3));
     }
@@ -29,7 +29,7 @@ public class NavigationProperties_Tests
     [Test]      // Test the "to-many" nav property from Color to UserLog
     public void Color_UserLogs_NavProperty_IsPopulated()
     {
-        using UserLogsDbContext context = _dbHelper.GetContext();
+        using SimpleDbContext context = _dbHelper.GetContext();
 
         Assert.Multiple(() =>
         {
@@ -45,7 +45,7 @@ public class NavigationProperties_Tests
     [Test]      // Test the "to-one" nav property from UserLog to Color
     public void UserLogs_Color_IsPopulated()
     {
-        using UserLogsDbContext context = _dbHelper.GetContext();
+        using SimpleDbContext context = _dbHelper.GetContext();
 
         Assert.Multiple(() =>
         {

@@ -21,12 +21,12 @@ public class UserLogRepository_Tests
 {
     private static readonly string _seedFile = @"..\..\..\Data\SEED.sql";  // relative path from where the executable is: bin/Debug/net7.0
 
-    private InMemoryDbHelper<UserLogsDbContext> _dbHelper = new InMemoryDbHelper<UserLogsDbContext>(_seedFile, DbPersistence.OneDbPerTest);
+    private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
     [Test]
     public void MostRecentVisit_ForUserWithTwoVisits_ReturnsNewest()
     {
-        using UserLogsDbContext context = _dbHelper.GetContext();
+        using SimpleDbContext context = _dbHelper.GetContext();
         IUserLogRepository repo = new UserLogRepository(context);
         // The db has been seeded
 
@@ -44,7 +44,7 @@ public class UserLogRepository_Tests
     [Test]
     public void MostRecentVisit_ForUserWithTwoVisits_ReturnsTwoLogsInCorrectOrder()
     {
-        using UserLogsDbContext context = _dbHelper.GetContext();
+        using SimpleDbContext context = _dbHelper.GetContext();
         IUserLogRepository repo = new UserLogRepository(context);
         // The db has been seeded
 
@@ -63,7 +63,7 @@ public class UserLogRepository_Tests
     [Test]
     public void MostRecentVisit_ForUserWithNoVisits_ReturnsNoLogs()
     {
-        using UserLogsDbContext context = _dbHelper.GetContext();
+        using SimpleDbContext context = _dbHelper.GetContext();
         IUserLogRepository repo = new UserLogRepository(context);
         // The db has been seeded
 
