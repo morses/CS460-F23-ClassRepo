@@ -29,6 +29,7 @@ public class Program
                                     .UseSqlServer(connectionStringApp));
 
         // Whenever a SimpleDbContext is desired, create and provide a UserLogsDbContext
+        builder.Services.AddScoped<DbContext, UserLogsDbContext>();
         builder.Services.AddScoped<SimpleDbContext, UserLogsDbContext>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddScoped<IUserLogRepository, UserLogRepository>();
