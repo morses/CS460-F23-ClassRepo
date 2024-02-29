@@ -11,6 +11,7 @@ namespace Simple.DAL.Concrete;
 
 public class UserLogRepository : Repository<UserLog>, IUserLogRepository
 { 
+    // These can stay using a SimpleDbContext, but we'll actually be providing a UserLogsDbContext, which is a subclass of SimpleDbContext
     public UserLogRepository(SimpleDbContext ctx) : base(ctx)
     {
 

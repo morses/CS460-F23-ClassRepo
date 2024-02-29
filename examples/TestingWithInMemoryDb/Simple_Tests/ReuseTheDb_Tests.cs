@@ -23,13 +23,13 @@ public class ReuseTheDb_Tests
 {
     private static readonly string _seedFile = @"..\..\..\Data\SEED.sql";  // relative path from where the executable is: bin/Debug/net7.0
 
-    private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.ReuseDb);
+    private InMemoryDbHelper<UserLogsDbContext> _dbHelper = new InMemoryDbHelper<UserLogsDbContext>(_seedFile, DbPersistence.ReuseDb);
 
     [Test]
     public void SimpleContext_Add_UserLog_IsSuccessful()
     {
         // Can we use the dbcontext directly to add an entity?
-        using SimpleDbContext context = _dbHelper.GetContext();
+        using UserLogsDbContext context = _dbHelper.GetContext();
 
         // Arrange
         DateTime timestamp = new DateTime(2022, 9, 23, 6, 15, 22);
@@ -63,7 +63,7 @@ public class ReuseTheDb_Tests
     public void SimpleContext_HasBeenSeeded()
     {
         // Db is seeded with 4 logs
-        SimpleDbContext context = _dbHelper.GetContext();
+        UserLogsDbContext context = _dbHelper.GetContext();
         Assert.That(context.UserLogs.Count(), Is.EqualTo(4));
         
         // !!! This test will fail if another test adds an item to the userlogs table as happens above.

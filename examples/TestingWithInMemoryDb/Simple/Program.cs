@@ -28,7 +28,8 @@ public class Program
                                     .UseLazyLoadingProxies()
                                     .UseSqlServer(connectionStringApp));
 
-        builder.Services.AddScoped<DbContext, SimpleDbContext>();
+        // Whenever a SimpleDbContext is desired, create and provide a UserLogsDbContext
+        builder.Services.AddScoped<SimpleDbContext, UserLogsDbContext>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddScoped<IUserLogRepository, UserLogRepository>();
 

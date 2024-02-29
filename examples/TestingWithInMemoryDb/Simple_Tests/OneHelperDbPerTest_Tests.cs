@@ -18,13 +18,13 @@ public class OneHelperDbPerTest_Tests
     private static readonly string _seedFile = @"..\..\..\Data\SEED.sql";  // relative path from where the executable is: bin/Debug/net7.0
 
     // Create this helper like this, for whatever context you desire
-    private InMemoryDbHelper<SimpleDbContext> _dbHelper = new InMemoryDbHelper<SimpleDbContext>(_seedFile, DbPersistence.OneDbPerTest);
+    private InMemoryDbHelper<UserLogsDbContext> _dbHelper = new InMemoryDbHelper<UserLogsDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
     [Test]
     public void SimpleContext_Add_UserLog_IsSuccessful()
     {
         // And then get your context
-        using SimpleDbContext context = _dbHelper.GetContext();
+        using UserLogsDbContext context = _dbHelper.GetContext();
 
         // Arrange
         DateTime timestamp = new DateTime(2022, 9, 23, 6, 15, 22);
@@ -57,7 +57,7 @@ public class OneHelperDbPerTest_Tests
     [Test]
     public void SimpleContext_HasBeenSeeded()
     {
-        using SimpleDbContext context = _dbHelper.GetContext();
+        using UserLogsDbContext context = _dbHelper.GetContext();
 
         Assert.That(context.UserLogs.Count(), Is.EqualTo(4));
     }

@@ -20,13 +20,14 @@ public partial class SimpleDbContext : DbContext
 
     public virtual DbSet<UserLog> UserLogs { get; set; }
 
+    // Now this file can be scaffolded and then left unchanged.  The app will use the derived context called UserLogsDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer("Name=AppConnection");
-        }
-        optionsBuilder.UseLazyLoadingProxies();
+        //if (!optionsBuilder.IsConfigured)
+        //{
+        //    optionsBuilder.UseSqlServer("Name=AppConnection");
+        //}
+        //optionsBuilder.UseLazyLoadingProxies();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
