@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demonstrate JavaScript modules with a form example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div id="user-details" class="col-8">
+                <h1 class="display-2 mb-3 text-center">Contact Information</h1>
+                <form id="user-details-form">
+                    <div class="mb-3 error-summary">
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="first-name">First name</label>
+                            <input type="text" name="first-name" class="form-control" id="first-name" placeholder="First name" aria-label="First name">
+                        </div>
+                        <div class="col">
+                            <label for="last-name">Last name</label>
+                            <input type="text" name="last-name" class="form-control" id="last-name" placeholder="Last name" aria-label="Last name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="age">Age</label>
+                            <input type="number" name="age" id="age" class="form-control" >
+                        </div>
+                        <div class="col">
+                            <label for="starting-date">Earliest start date</label>
+                            <input type="date" name="starting-date" id="starting-date" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="name@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" name="save-info" id="save-info" class="form-check-input">
+                        <label class="ms-2" for="save-info">Save my details</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div id="user-details" class="col-8">
+                <h1 class="display-2 mb-3 text-center">Preferences</h1>
+                <form id="user-preferences-form">
+                    <div class="mb-3 error-summary">
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="favorite-color">Favorite color</label>
+                            <input type="color" name="favorite-color" class="form-control" id="favorite-color" placeholder="Favorite color" aria-label="Favorite color">
+                        </div>
+                        <div class="col">
+                            <label for="favorite-movie">Favorite movie</label>
+                            <input type="text" name="favorite-movie" class="form-control" id="favorite-movie" placeholder="Favorite movie" aria-label="Favorite movie">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mood-value">Your current mood value</label>
+                        <input type="range" name="mood-value" id="mood-value" class="form-range" min="0" max="100">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+
+
