@@ -1,0 +1,31 @@
+{
+    "PROJECT_DIR": "C:\\Users\\morses\\Documents\\Repositories\\CS460-F23-ClassRepo\\examples\\TestingWithInMemoryDb\\Simple",
+    "WEB_APP_NAME": "testdeploy844",
+    "LOCATION": "westus",
+    "APP_SKU": "F1",
+    "OS": "Linux",
+    "RUNTIME": "DOTNETCORE:8.0",
+    "APPLICATION_SETTINGS": {
+        "SeedAdminPW": "XXXXXXX",
+        "SeedUserPW": "YYYYYYY"
+    },
+    "CONNECTION_STRINGS": [
+        { "name": "AuthConnection", "db_name": "SimpleAuth" },
+        { "name": "AppConnection", "db_name": "SimpleApp" }
+    ],
+    "CONNECTION_STRING_TEMPLATE": "{connection_name}=\"Server=tcp:{server_name}.database.windows.net,1433;Initial Catalog={db_name};Persist Security Info=False;User ID={username};Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;\"",
+    "SQL_SERVER_NAME": "testdeploy844server",
+    "DB_USERNAME": "ZZZZZZZZ",
+    "DB_PASSWORD": "XXXXXXXX",
+    "DB_INSTANCES": [{
+            "name": "SimpleAuth",
+            "up": "C:\\Users\\morses\\Documents\\Repositories\\CS460-F23-ClassRepo\\examples\\TestingWithInMemoryDb\\Simple\\Data\\IdentityUp.sql",
+            "seed": null
+        },
+        {
+            "name": "SimpleApp",
+            "up": "C:\\Users\\morses\\Documents\\Repositories\\CS460-F23-ClassRepo\\examples\\TestingWithInMemoryDb\\Simple\\Data\\UP.sql",
+            "seed": "C:\\Users\\morses\\Documents\\Repositories\\CS460-F23-ClassRepo\\examples\\TestingWithInMemoryDb\\Simple\\Data\\SEED.sql"
+        }
+    ]
+}
