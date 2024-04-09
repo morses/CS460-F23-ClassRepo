@@ -15,6 +15,10 @@ namespace Standups_BDD_Tests.PageObjects
 
         public IWebElement RegisterButton => _webDriver.FindElement(By.Id("register-link"));
         public IWebElement NavBarHelloLink => _webDriver.FindElement(By.CssSelector("a[title=\"Manage\"]"));  //or _webDriver.FindElement(By.CssSelector("a[href=\"/Identity/Account/Manage\"]"));
+
+        public IWebElement NewsletterEmailInput => _webDriver.FindElement(By.Id("newsletter-subscribe-email"));
+        public IWebElement NewsletterSubscribeButton => _webDriver.FindElement(By.Id("newsletter-subscribe-submit-button"));
+        
         private ReadOnlyCollection<IWebElement> Questions => _webDriver.FindElements(By.CssSelector("li.question a"));
 
         public string NavbarWelcomeText()
@@ -32,6 +36,11 @@ namespace Standups_BDD_Tests.PageObjects
         {
             // Look through all the questions and see if text is present
             return Questions.Any(q => q.Text.Contains(text));
+        }
+
+        public void SubmitNewsletterEmail()
+        {
+            NewsletterSubscribeButton.Click();
         }
     }
 }

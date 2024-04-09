@@ -134,6 +134,72 @@ this.ScenarioInitialize(scenarioInfo);
             }
             await this.ScenarioCleanupAsync();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Home page has an email submission form to receive newsletter")]
+        public async System.Threading.Tasks.Task HomePageHasAnEmailSubmissionFormToReceiveNewsletter()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            Reqnroll.ScenarioInfo scenarioInfo = new Reqnroll.ScenarioInfo("Home page has an email submission form to receive newsletter", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 17
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 18
+ await testRunner.GivenAsync("I am a visitor", ((string)(null)), ((Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 19
+ await testRunner.WhenAsync("I am on the \"Home\" page", ((string)(null)), ((Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 20
+ await testRunner.ThenAsync("I should see an input to submit my email address", ((string)(null)), ((Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Home page can submit email for newsletter")]
+        public async System.Threading.Tasks.Task HomePageCanSubmitEmailForNewsletter()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            Reqnroll.ScenarioInfo scenarioInfo = new Reqnroll.ScenarioInfo("Home page can submit email for newsletter", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 22
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 23
+ await testRunner.GivenAsync("I am a visitor", ((string)(null)), ((Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 24
+  await testRunner.AndAsync("I am on the \"Home\" page", ((string)(null)), ((Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 25
+ await testRunner.WhenAsync("I enter in my valid email address to subscribe", ((string)(null)), ((Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 26
+  await testRunner.AndAsync("I subscribe", ((string)(null)), ((Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+ await testRunner.ThenAsync("I will see some sort of a success message", ((string)(null)), ((Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
     }
 }
 #pragma warning restore

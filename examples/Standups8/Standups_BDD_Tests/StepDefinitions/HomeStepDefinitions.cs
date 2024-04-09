@@ -71,5 +71,31 @@ namespace Standups_BDD_Tests.StepDefinitions
             _homePage.HasQuestionText((string)_scenarioContext["CurrentQuestionText"]).Should().BeTrue();
         }
 
+        [Then("I should see an input to submit my email address")]
+        public void ThenIShouldSeeAnInputToSubmitMyEmailAddress()
+        {
+            _homePage.NewsletterEmailInput.Should().NotBeNull();
+            _homePage.NewsletterEmailInput.Displayed.Should().BeTrue();
+        }
+
+        [When("I enter in my valid email address to subscribe")]
+        public void WhenIEnterInMyValidEmailAddressToSubscribe()
+        {
+            throw new PendingStepException();
+        }
+
+        [When("I subscribe")]
+        public void WhenISubscribe()
+        {
+            throw new PendingStepException();
+        }
+
+        [Then("I will see some sort of a success message")]
+        public void ThenIWillSeeSomeSortOfASuccessMessage()
+        {
+            throw new PendingStepException();
+        }
+
+
     }
 }
