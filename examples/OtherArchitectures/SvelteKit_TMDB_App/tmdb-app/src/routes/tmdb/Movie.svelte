@@ -24,23 +24,29 @@
     import { createEventDispatcher } from 'svelte';
     export let movie;
     const dispatch = createEventDispatcher();
-
     let imageUrl : string;
-    if(movie.poster_path)
-    {
-        imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-    }
-    else
-    {
-        imageUrl = `https://via.placeholder.com/500x750.png?text=No+Image+Available`;
-    }
-    const imageAlt = `Poster image for the movie ${movie.title}`;
-    // Convert the release date to a more readable format in the form of January 4, 2000
-    const releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+    let imageAlt : string;
+    let releaseDate : string;
+
+    // All these things depend on movie, which is passed in as a prop.  But they are not reactive, 
+    // so we need to set them in a reactive statement
+    $: {
+        if(movie.poster_path)
+        {
+            imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+        }
+        else
+        {
+            imageUrl = `https://via.placeholder.com/500x750.png?text=No+Image+Available`;
+        }
+        imageAlt = `Poster image for the movie ${movie.title}`;
+        // Convert the release date to a more readable format in the form of January 4, 2000
+        releaseDate = new Date(movie.release_date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    } 
 
     function handleClick() {
         dispatch('message', { id: movie.id } );

@@ -3,15 +3,29 @@
     import { fade } from 'svelte/transition';
     import Movie from './Movie.svelte';
     import Modal from './Modal.svelte';
+    import type { MovieDetails, MovieOverview, MovieSearchResults } from './Dtos';
 
-    export let form;
+    type FormType = {
+        query: string,
+        success: boolean,
+        missing: boolean,
+        movies: MovieSearchResults
+    };
+
+    export let form : FormType | undefined;
     console.log(form);
 
     let showModal = false;
     let movieId = 0;
-    let movieDetails = {id: 0, success: false, data: {title: '', release_date: '', runtime: 0, budget: 0, backdrop_path: '', genres: [{name: ''}]}};
+    let movieDetails : MovieDetails;// = {id: 0, success: false, data: {title: '', release_date: '', runtime: 0, budget: 0, backdrop_path: '', genres: [{name: ''}]}};
 
-    async function showMovieDetails(event) {
+    type MovieDetailsEndpointType = {
+        id: number,
+        success: boolean,
+        data: MovieDetails
+    };
+
+    async function showMovieDetails(event : any) {
         let id = event.detail.id;
         movieId = id;
         const response = await fetch('/api/tmdb/movie/details', {
@@ -21,9 +35,14 @@
             },
             body: JSON.stringify({ id })
         });
-        const data = await response.json();
-        movieDetails = data;
-        console.log(movieDetails);
+        const data : MovieDetailsEndpointType = await response.json();
+        if(!data.success) {
+            console.error('Failed to get movie details');
+            // Show an error message to the user
+            return;
+        }
+        movieDetails = data.data;
+        //console.log(movieDetails);
         showModal = true;
     }
 </script>
@@ -43,27 +62,30 @@
     <p>Please enter a search query</p>
 {/if}
 
+{#if showModal}
 <Modal bind:showModal>
-    <h1 slot="header">{movieDetails.data.title}</h1>
+    <h1 slot="header">{movieDetails.title}</h1>
     <p>Ran out of time in this example so just outputing unstyled data</p>
     <ul>
         <li>{movieId}</li>
-        <li>{movieDetails.data.release_date}</li>
-        <li>{movieDetails.data.runtime} minutes</li>
+        <li>{movieDetails.release_date}</li>
+        <li>{movieDetails.runtime} minutes</li>
         <li>
-            {#each movieDetails.data.genres as genre}
-                {genre.name},
-            {/each}
+            {#if movieDetails.genres}
+                {#each movieDetails.genres as genre}
+                    {genre.name},
+                {/each}
+            {/if}
         </li>
-        <li>${movieDetails.data.budget}</li>
+        <li>${movieDetails.budget}</li>
     </ul>
-    <img src={`https://image.tmdb.org/t/p/w780${movieDetails.data.backdrop_path}`} width="600" alt="Background poster for the movie" />
+    <img src={`https://image.tmdb.org/t/p/w780${movieDetails.backdrop_path}`} width="600" alt="Background poster for the movie" />
 </Modal>
-
+{/if}
 {#if form?.success}
     <div in:fade={{duration:800, delay:400}} out:fade={{duration:300}}>
-        {#each form.movies.results as movie, i}
-            <div class="movies-container" id={movie.id}>
+        {#each form?.movies.results as movie}
+            <div class="movies-container" id={`${movie.id}`}>
                 <Movie movie={movie} on:message={showMovieDetails} />
             </div>
         {/each}

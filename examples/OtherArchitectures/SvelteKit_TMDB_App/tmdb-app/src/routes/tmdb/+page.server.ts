@@ -1,6 +1,9 @@
 // The code in this file runs on the server only.
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
+import type { MovieSearchResults } from './Dtos';
+import { parseMovieSearchResults } from './Dtos';
+import { ZodError } from 'zod';
 
 // Store the API key in an .env file that is excluded from the repo by .gitignore
 import { TmdbBearerToken } from '$env/static/private';  // when using a .env file that contains the secret or
@@ -9,7 +12,7 @@ import { TmdbBearerToken } from '$env/static/private';  // when using a .env fil
 
 
 // Helper function to fetch movies from the TMDB API
-async function fetchMovies(query: string) {
+async function fetchMovies(query: string) : Promise<MovieSearchResults> {
     const q = encodeURIComponent(query);
     const uri = `https://api.themoviedb.org/3/search/movie?query=${q}&include_adult=false&language=en-US&page=1`;
     // fetch this uri and set headers
@@ -20,7 +23,13 @@ async function fetchMovies(query: string) {
         }
     });
     const data = await response.json();
-    return data;
+    //console.log(JSON.stringify(data, null, 2));
+    try {
+        return parseMovieSearchResults(data);
+    }
+    catch (e : any) {
+        return e;
+    }
 }
 
 /* This function is called on the server when the route is loaded.  Use it to
@@ -47,12 +56,26 @@ export const actions = {
         const data = await request.formData();
         const query = data.get('query') as string;
         if (!query || query.trim().length === 0)
-            return fail(400, { query: query, missing: true, success: false });
-        return {
-            query: query,
-            movies: await fetchMovies(query),
-            success: true
-        };
+            return { query: query, missing: true, success: false, movies: null };
+        let movies: MovieSearchResults;
+        try {
+            movies = await fetchMovies(query);
+            return {
+                query: query,
+                missing: false,
+                movies: movies,
+                success: true
+            };
+        }
+        catch (e: any) {
+            return {
+                query: query,
+                missing: false,
+                movies: e,
+                success: false
+            };
+        }
+        
     },
     sample: async ({ cookies, request }) => {
         return {
