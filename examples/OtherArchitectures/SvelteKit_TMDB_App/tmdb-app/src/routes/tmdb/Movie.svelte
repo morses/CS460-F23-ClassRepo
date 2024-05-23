@@ -22,7 +22,8 @@
 
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    export let movie;
+    import type { MovieOverview } from './Dtos';
+    export let movie : MovieOverview;
     const dispatch = createEventDispatcher();
     let imageUrl : string;
     let imageAlt : string;
